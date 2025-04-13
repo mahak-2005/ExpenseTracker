@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
 
 @RestController
 @RequestMapping("/api/Bills")
@@ -37,22 +35,22 @@ public class BillController {
     @GetMapping("/{id}")
     public ResponseEntity<Bill> getBillById(@PathVariable long id) {
         Bill bill = billService.getBillById(id);
-        if (bill == null) {
+        if (bill != null) {
             return ResponseEntity.ok(bill);
         }
         return ResponseEntity.notFound().build();
     }
     @GetMapping("/ByBillType")
-    public ResponseEntity<List<Bill>> getBillByBillType(@RequestParam String billType) {
+    public ResponseEntity<Bill> getBillByBillType(@RequestParam String billType) {
         Bill bill = billService.getBillByBillType(billType);
-        if (bill == null) {
-            return ResponseEntity.ok((bill);
+        if (bill != null) {
+            return ResponseEntity.ok(bill);
         }
         return ResponseEntity.notFound().build();
     }
-    @DeleteMapping("/Bill/{Id}")
-    public ResponseEntity<Bill> deleteBill(@PathVariable long Id) {
-        boolean deleted = billService.deleteBill(id);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBill(@PathVariable long id) {
+        boolean deleted= billService.deleteBill(id);
         if (deleted) {
             return ResponseEntity.ok("Bill deleted successfully");
         }

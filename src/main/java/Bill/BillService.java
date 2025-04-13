@@ -8,5 +8,5 @@ public interface BillService {
 
     Bill getBillById(long id) throws BillNotFoundException;
     Bill getBillByBillType(String billType) throws BillNotFoundException;
-    boolean deleteBill(long id) throws Exception;
+    boolean deleteBill(long id);
 }
