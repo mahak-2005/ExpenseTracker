@@ -6,23 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-/**
- * Repository interface for managing {@link Food} entities in the database.
- * <p>
- * This interface extends {@link JpaRepository} which provides standard CRUD operations:
- * <ul>
- *     <li>{@code save(food entity)}: Saves a food entity to the database</li>
- *     <li>{@code findById(Long id)}: Finds a food by its ID</li>
- *     <li>{@code findAll()}: Retrieves all products</li>
- *     <li>{@code deleteById(Long id)}: Deletes a food by its ID</li>
- *     <li>{@code delete(food entity)}: Deletes a specific product entity</li>
- *     <li>{@code count()}: Returns the total number of products</li>
- *     <li>{@code existsById(Long id)}: Checks if a food with given ID exists</li>
- * </ul>
- * <p>
- * The {@code @Repository} annotation marks this interface as a Spring Data repository,
- * which allows Spring to find and configure it automatically.
- */
+
 @Repository
 public interface FoodRepository extends JpaRepository<Food, Long> {
     /**
@@ -50,18 +34,47 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
      * @return a list of products with prices greater than the specified value
      */
     List<Food> findByPriceGreaterThan(double price);
+    
+
+/**
+ * Repository interface for managing Food entities in the database.
+ * Provides CRUD operations and custom queries for Food items.
+ * Extends JpaRepository to inherit standard JPA operations.
+ */
+@Repository
+public interface FoodRepository extends JpaRepository<Food, Long> {
+
     /**
-     * Finds all products whose name contains the specified keyword, ignoring case.
-     * <p>
-     * This method provides a case-insensitive partial match search on food names.
-     * For example, searching for "phone" would match "Smartphone", "iPhone", etc.
-     * Spring Data JPA automatically implements this method based on its name
-     * following the pattern "findBy[PropertyName][Containing][IgnoreCase]".
+     * Finds a food item by its exact name match.
+     *
+     * @param name the exact name of the food item to search for
+     * @return an Optional containing the found food item or empty if not found
+     */
+    Optional<Food> findByName(String name);
+
+    /**
+     * Finds all food items with price greater than the specified value.
+     *
+     * @param price the minimum price threshold (exclusive)
+     * @return a list of food items meeting the price criteria
+     */
+    List<Food> findByPriceGreaterThan(double price);
+
+    /**
+     * Finds food items whose names contain the given keyword (case-insensitive).
      *
      * @param keyword the search term to look for in food names
-     * @return a list of products whose names contain the keyword (case insensitive)
+     * @return a list of matching food items
      */
     List<Food> findByNameContainingIgnoreCase(String keyword);
+
+    /**
+     * Finds food items within a specified price range, ordered by price ascending.
+     * Uses a custom JPQL query for the search.
+     *
+     * @param name the name parameter (note: appears to be incorrectly named for price range query)
+     * @return a list of food items within the price range
+     */
     @Query("select f from Food f where f.price BETWEEN ?1 AND ?2 ORDER BY f.price ASC ")
     List<Food> findFoodInPriceRange(String name);
 }

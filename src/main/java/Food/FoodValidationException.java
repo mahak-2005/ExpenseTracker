@@ -1,12 +1,18 @@
 package Food;
-/**
- * Exception thrown when there is an issue with food validation.
- * For example, when the required fields are missing or have invalid values.
+
+public class FoodValidationException extends RuntimeException {
+
+ /**
+ * Custom exception class to indicate validation failures for Food entities.
+ * Thrown when a Food object fails business logic or data validation checks.
+ * Extends RuntimeException to make it an unchecked exception.
  */
 public class FoodValidationException extends RuntimeException {
+
     /**
-     * Creates a new FoodValidationException with the specified message.
-     * @param message The error message explaining the validation issue.
+     * Constructs a new FoodValidationException with the specified error message.
+     *
+     * @param message the detail message describing the validation failure
      */
     public FoodValidationException(String message) {
         super(message);

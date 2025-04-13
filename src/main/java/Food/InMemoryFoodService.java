@@ -4,42 +4,51 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
- * Service class for managing Food operations.
- * This class handles business logic related to Food.
+ * In-memory implementation of the FoodService interface.
+ * Provides temporary storage of Food entities in an ArrayList.
+ * Marked as Spring Service component for dependency injection.
  */
 @Service
 public class InMemoryFoodService implements FoodService {
     private final List<Food> foods;
 
+    /**
+     * Constructs a new InMemoryFoodService with empty storage.
+     */
     public InMemoryFoodService(){
         this.foods=new ArrayList<>();
     }
+
     /**
-     * Creates a new food and adds it to the list.
+     * Adds a new food item to the in-memory storage.
      *
-     * @param food The food to be created and stored
-     * @return The newly created food
+     * @param food the food item to be created
+     * @return the created food item
      */
     @Override
     public Food createFood(Food food){
         foods.add(food);
         return food;
     }
+
     /**
-     * Retrieves all food from the list.
+     * Retrieves all food items from storage.
      *
-     * @return List of all food
+     * @return list of all stored food items
      */
     @Override
     public List<Food> getAllFoods(){
         return foods;
     }
+
+
     /**
-     * Finds a food by its ID.
+     * Finds a food item by its unique identifier.
      *
-     * @param id The ID of the food to find
-     * @return The found food or null if not found
+     * @param id the ID of the food item to find
+     * @return the found food item, or null if not found
      */
     @Override
     public Food getFoodById(long id){
@@ -50,11 +59,12 @@ public class InMemoryFoodService implements FoodService {
         }
         return null;
     }
+
     /**
-     * Finds  food by its name.
+     * Finds a food item by its exact name.
      *
-     * @param name The name of the food to find
-     * @return The found food or null if not found
+     * @param name the exact name of the food item to find
+     * @return the found food item, or null if not found
      */
     @Override
     public Food getFoodByName(String name){
@@ -65,13 +75,13 @@ public class InMemoryFoodService implements FoodService {
         }
         return null;
     }
-    /**
-     * Deletes food by its ID.
-     *
-     * @param id The ID of the food to delete
-     * @return true if food was deleted, false if not found
-     */
 
+    /**
+     * Removes a food item from storage by its ID.
+     *
+     * @param id the ID of the food item to remove
+     * @return true if removal was successful, false otherwise
+     */
     @Override
     public boolean deleteFood(long id){
         Food food=getFoodById(id);

@@ -4,10 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 /**
- * A service that uses a database to store and manage food information.
- * This class implements the ProductService interface and uses a ProductRepository
- * to perform operations on the database.
+ * Service implementation for food management operations.
+ * Provides database-backed implementation of {@link FoodService} interface.
+ * Handles business logic and data persistence using {@link FoodRepository}.
  */
 @Service
 public class DatabaseFoodService implements FoodService {
@@ -15,20 +16,25 @@ public class DatabaseFoodService implements FoodService {
      * The repository used to access the database.
      */
     private final FoodRepository foodRepository;
+
+
     /**
-     * Creates a new DatabaseProductService with the provided repository.
+     * Constructs a new DatabaseFoodService with the specified repository.
      *
-     * @param foodRepository the repository to use for database operations
+     * @param foodRepository the food repository used for data persistence
      */
     @Autowired
     public DatabaseFoodService(FoodRepository foodRepository) {
         this.foodRepository = foodRepository;
     }
+
+
     /**
-     * Adds a new food to the database.
+     * Creates and persists a new food item after validation.
      *
-     * @param food the food to add
-     * @return the saved food with any database-generated values (like ID)
+     * @param food the food item to be created
+     * @return the persisted food item
+     * @throws FoodValidationException if the food is null or invalid
      */
     @Override
     public Food createFood(Food food) {
@@ -37,10 +43,13 @@ public class DatabaseFoodService implements FoodService {
         }
         return foodRepository.save(food);
     }
+
+
     /**
-     * Gets a list of all food from the database.
+     * Retrieves all food items from the database.
      *
-     * @return a list containing all products
+     * @return list of all food items
+     * @throws FoodNotFoundException if no food items exist in the database
      */
     @Override
     public List<Food> getAllFoods() {
@@ -50,31 +59,40 @@ public class DatabaseFoodService implements FoodService {
         }
         return foodRepository.findAll();
     }
+
+
     /**
-     * Finds a food in the database using its ID.
+     * Retrieves a food item by its unique identifier.
      *
-     * @param id the ID of the food to find
-     * @return the found food, or null if no food exists with the given ID
+     * @param id the unique identifier of the food item
+     * @return the requested food item
+     * @throws FoodNotFoundException if no food exists with the given ID
      */
     @Override
     public Food getFoodById(long id) {
         return foodRepository.findById(id).orElseThrow(() -> new FoodNotFoundException("Food with id " + id + " not found"));
     }
+
+
     /**
-     * Finds a food in the database using its name.
+     * Retrieves a food item by its name.
      *
-     * @param name the name of the food to find
-     * @return the found food, or null if no food exists with the given name
+     * @param name the name of the food item to search for
+     * @return the matching food item
+     * @throws FoodNotFoundException if no food exists with the given name
      */
     @Override
     public Food getFoodByName(String name) {
         return foodRepository.findByName(name).orElseThrow(() -> new FoodNotFoundException("Food with name " + name + " not found"));
     }
+
+
     /**
-     * Deletes a food from the database.
+     * Deletes a food item by its unique identifier.
      *
-     * @param id the ID of the food to delete
-     * @return true if a food was deleted, false if no food exists with the given ID
+     * @param id the unique identifier of the food item to delete
+     * @return true if the food item was successfully deleted
+     * @throws FoodNotFoundException if no food exists with the given ID
      */
     @Override
     public boolean deleteFood(long id) {

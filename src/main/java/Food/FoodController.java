@@ -8,9 +8,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+
 /**
- * REST controller for managing products in the Shopkart application.
- * Provides endpoints for CRUD operations on products.
+ * REST controller for handling food-related HTTP requests.
+ * Provides endpoints for CRUD operations on food items.
  */
 @RestController
 @RequestMapping("/api/foods")
@@ -18,10 +20,16 @@ import java.util.List;
 public class FoodController {
     private final FoodService foodService;
 
+    /**
+     * Constructs a new FoodController with the specified food service.
+     *
+     * @param foodService the food service implementation to be used
+     */
     @Autowired
     public FoodController(@Qualifier("databaseFoodService")FoodService foodService) {
         this.foodService = foodService;
     }
+
     /**
      * Creates a new food.
      *
@@ -33,22 +41,24 @@ public class FoodController {
         Food savedFood = foodService.createFood(food);
         return new  ResponseEntity<>(savedFood, HttpStatus.CREATED);
     }
+
     /**
-     * Retrieves all food from the system.
+     * Retrieves all food items.
      *
-     * @return ResponseEntity containing a list of all products with HTTP status 200 (OK)
+     * @return ResponseEntity containing a list of all foods and HTTP status 200 (OK)
      */
     @GetMapping
     public ResponseEntity<List<Food>> getAllFood(){
         List<Food> foods= foodService.getAllFoods();
         return ResponseEntity.ok(foods);
     }
+
     /**
-     * Retrieves a specific food by its ID.
+     * Retrieves a food item by its ID.
      *
-     * @param id the unique identifier of the food
-     * @return ResponseEntity containing the food with HTTP status 200 (OK) if found,
-     * or HTTP status 404 (Not Found) if the food doesn't exist
+     * @param id the ID of the food to retrieve
+     * @return ResponseEntity containing the food if found (HTTP 200),
+     *         or HTTP 404 (NOT FOUND) if the food doesn't exist
      */
     @GetMapping("/{id}")
     public ResponseEntity<Food> getFoodById(@PathVariable long id){
@@ -58,12 +68,13 @@ public class FoodController {
         }
         return ResponseEntity.notFound().build();
     }
+
     /**
-     * Retrieves  food by its name.
+     * Retrieves a food item by its name.
      *
-     * @param name the name of the food to search for
-     * @return ResponseEntity containing the food with HTTP status 200 (OK) if found,
-     * or HTTP status 404 (Not Found) if no food with the given name exists
+     * @param name the name of the food to retrieve
+     * @return ResponseEntity containing the food if found (HTTP 200),
+     *         or HTTP 404 (NOT FOUND) if the food doesn't exist
      */
     @GetMapping("/byName")
     public ResponseEntity<Food> getFoodByName(@RequestParam String name){
@@ -73,12 +84,13 @@ public class FoodController {
         }
         return ResponseEntity.notFound().build();
     }
+
     /**
-     * Deletes a specific food from the system.
+     * Deletes a food item by its ID.
      *
-     * @param id the unique identifier of the food to delete
-     * @return ResponseEntity with a success message and HTTP status 200 (OK) if deleted,
-     * or an error message and HTTP status 404 (Not Found) if the product doesn't exist
+     * @param id the ID of the food to delete
+     * @return ResponseEntity with success message if deleted (HTTP 200),
+     *         or error message with HTTP 404 (NOT FOUND) if food doesn't exist
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFood(@PathVariable  long id){
