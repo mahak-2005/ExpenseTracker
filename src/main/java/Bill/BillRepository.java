@@ -12,4 +12,5 @@ public interface BillRepository extends JpaRepository<Bill, Long> {
     List<Bill> findByPriceGreaterThan(double price);
 
 
+    Long Id(long id);
 }

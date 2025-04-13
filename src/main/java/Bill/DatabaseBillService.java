@@ -21,8 +21,8 @@ public class DatabaseBillService implements BillService {
     }
 
     @Override
-    public List<Bill> gelAllBill(){
-        List<Bill> bills = billRepository.findAll();
+    public List<Bill> getAllBill(){
+        List<Bill> billList = billRepository.findAll();
         if (billList.isEmpty()) {
             throw new BillNotFoundException("no bill found");
         }
@@ -30,11 +30,11 @@ public class DatabaseBillService implements BillService {
     }
     @Override
     public Bill getBillById(long id) {
-        return billRepository.findById.orElseThrow(() -> new BillNotFoundException("Bill with id " + id + " not found"));
+        return billRepository.findById(id).orElseThrow(() -> new BillNotFoundException("Bill with id " + id + " not found"));
     }
     @Override
     public Bill getBillByBillType(String billType) {
-        return billRepository.findBybillType.orelseThrow( () -> new BillNotFoundException("Bill with billType" + billType + "not found"));
+        return billRepository.findByBillType(billType).orElseThrow(() -> new BillNotFoundException("Bill with billType" + billType + "not found"));
     }
     @Override
     public boolean deleteBill(long id) {

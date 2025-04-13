@@ -1,7 +1,6 @@
 package Bill;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Objects;
 
@@ -9,15 +8,21 @@ import java.util.Objects;
 @Entity
 @Table(name = "Bill")
 public class Bill {
+    @Id
+    @GeneratedValue
     private long id;
+
+    @Column(nullable = false)
     private String billType;
+
+    @Column(nullable = false)
     private double price;
 
     public Bill() {
     }
 
     public Bill(long id, String billType, double price) {
-        this.id = id;
+
         this.billType = billType;
         this.price = price;
     }

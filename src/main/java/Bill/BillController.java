@@ -30,7 +30,7 @@ public class BillController {
 
     @GetMapping
     public ResponseEntity<List<Bill>> getAllBills() {
-        List<Bill> bills = billService.getallBill();
+        List<Bill> bills = billService.getAllBill();
         return  ResponseEntity.ok(bills);
     }
 

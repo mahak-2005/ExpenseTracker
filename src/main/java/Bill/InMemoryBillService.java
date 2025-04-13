@@ -17,12 +17,12 @@ public class InMemoryBillService implements BillService {
     }
 
     @Override
-    public List<Bill> getallBill() throws Exception {
+    public List<Bill> getAllBill()  {
         return List.of();
     }
 
     @Override
-    public Bill getBillById(long id) throws Exception {
+    public Bill getBillById(long id)  {
         for (Bill bill : bills) {
             if (bill.getId() == id) {
                 return bill;
@@ -32,7 +32,7 @@ public class InMemoryBillService implements BillService {
     }
 
     @Override
-    public Bill getBillByBillType(String billType) throws Exception {
+    public Bill getBillByBillType(String billType)  {
         for (Bill bill : bills) {
             if (bill.getBillType().equals(billType)) {
                 return bill;
@@ -42,7 +42,7 @@ public class InMemoryBillService implements BillService {
     }
 
     @Override
-    public boolean deleteBill(long id) throws Exception {
+    public boolean deleteBill(long id)  {
         for (Bill bill : bills) {
             if (bill.getId() == id) {
                 bills.remove(bill);
