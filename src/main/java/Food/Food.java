@@ -14,9 +14,15 @@ public class Food {
     private long id;
 
 
+    /**
+     * Name of the food
+     */
     @Column(nullable = false)
     private String name;
 
+    /**
+     * Price of the food
+     */
     @Column(nullable = false)
     private double price;
 
