@@ -39,22 +39,8 @@ public class InMemoryFoodService implements FoodService {
         }
         return null;
     }
-    @Override
-    public Food updateFoodname(long id, String name){
-        Food food=getFoodById(id);
-        if (food!=null){
-            food.setName(name);
-        }
-        return food;
-    }
-    @Override
-    public Food updateFoodprice(long id, double price){
-        Food food=getFoodById(id);
-        if (food!=null){
-            food.setPrice(price);
-        }
-        return food;
-    }
+
+
     @Override
     public boolean deleteFood(long id){
         Food food=getFoodById(id);
