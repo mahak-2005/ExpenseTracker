@@ -12,12 +12,9 @@ public class Food {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @NotBlank(message = "Name should not be black")
-    @Size(min= 4, message="Minimum length should be 4 characters")
     @Column(nullable = false)
     private String name;
-    @NotNull(message = "Price should not be null")
-    @Min(value = 0, message = "Product price must be greater than or equal to 0.")
+
     @Column(nullable = false)
     private double price;
 
