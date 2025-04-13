@@ -20,7 +20,7 @@ public class FoodController {
         this.foodService = foodService;
     }
     @PostMapping
-    public ResponseEntity<Food> createFood(@Valid @RequestBody Food food){
+    public ResponseEntity<Food> createFood( @RequestBody Food food){
         Food savedFood = foodService.createFood(food);
         return new  ResponseEntity<>(savedFood, HttpStatus.CREATED);
     }
@@ -30,7 +30,7 @@ public class FoodController {
         return ResponseEntity.ok(foods);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Food> getFoodById(@PathVariable @Positive long id){
+    public ResponseEntity<Food> getFoodById(@PathVariable long id){
         Food food = foodService.getFoodById(id);
         if(food != null){
             return ResponseEntity.ok(food);
@@ -46,7 +46,7 @@ public class FoodController {
         return ResponseEntity.notFound().build();
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteFood(@PathVariable @Positive long id){
+    public ResponseEntity<String> deleteFood(@PathVariable  long id){
         boolean deleted = foodService.deleteFood(id);
     if(deleted){
         return ResponseEntity.ok("Food deleted successfully");
